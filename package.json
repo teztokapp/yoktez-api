@@ -1,0 +1,18 @@
+{
+  "name": "yoktez-api",
+  "version": "1.0.0",
+  "description": "Standalone YOK Tez API for TezTok",
+  "type": "module",
+  "main": "yoktezServer.js",
+  "scripts": {
+    "start": "node yoktezServer.js",
+    "dev": "node --watch yoktezServer.js"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "express": "^4.21.2",
+    "openai": "^4.83.0"
+  }
+}
