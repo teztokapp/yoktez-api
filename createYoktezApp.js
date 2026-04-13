@@ -15,11 +15,12 @@ import { generateSummary } from "./summary.js";
 
 export function createYoktezApp() {
   const app = express();
+  const router = express.Router();
 
   app.use(cors());
   app.use(express.json());
 
-  app.get("/api/health", (_req, res) => {
+  router.get("/health", (_req, res) => {
     res.json({
       ok: true,
       service: "yoktez",
@@ -28,7 +29,7 @@ export function createYoktezApp() {
     });
   });
 
-  app.get("/api/random-thesis", async (req, res, next) => {
+  router.get("/random-thesis", async (req, res, next) => {
     try {
       const seed = Number(req.query.seed ?? Math.random());
       const thesis = await getRandomThesis(seed);
@@ -38,7 +39,7 @@ export function createYoktezApp() {
     }
   });
 
-  app.get("/api/feed", async (req, res, next) => {
+  router.get("/feed", async (req, res, next) => {
     try {
       const cursor = Number(req.query.cursor ?? 0);
       const limit = Math.min(Number(req.query.limit ?? 4), 10);
@@ -50,7 +51,7 @@ export function createYoktezApp() {
     }
   });
 
-  app.get("/api/search", async (req, res, next) => {
+  router.get("/search", async (req, res, next) => {
     try {
       const criteria = {
         query: String(req.query.q ?? ""),
@@ -71,7 +72,7 @@ export function createYoktezApp() {
     }
   });
 
-  app.get("/api/categories", async (_req, res, next) => {
+  router.get("/categories", async (_req, res, next) => {
     try {
       const items = await getCategories();
       res.json({ items });
@@ -80,7 +81,7 @@ export function createYoktezApp() {
     }
   });
 
-  app.get("/api/disciplines", async (_req, res, next) => {
+  router.get("/disciplines", async (_req, res, next) => {
     try {
       const items = await getDisciplines();
       res.json({ items });
@@ -89,7 +90,7 @@ export function createYoktezApp() {
     }
   });
 
-  app.get("/api/category-feed", async (req, res, next) => {
+  router.get("/category-feed", async (req, res, next) => {
     try {
       const category = String(req.query.category ?? "");
       const year = req.query.year;
@@ -103,7 +104,7 @@ export function createYoktezApp() {
     }
   });
 
-  app.get("/api/discipline-feed", async (req, res, next) => {
+  router.get("/discipline-feed", async (req, res, next) => {
     try {
       const discipline = String(req.query.discipline ?? "");
       const year = req.query.year;
@@ -117,7 +118,7 @@ export function createYoktezApp() {
     }
   });
 
-  app.get("/api/thesis/:id", async (req, res, next) => {
+  router.get("/thesis/:id", async (req, res, next) => {
     try {
       const thesis = await getThesisById(req.params.id);
 
@@ -132,7 +133,7 @@ export function createYoktezApp() {
     }
   });
 
-  app.post("/api/thesis/:id/summary", async (req, res, next) => {
+  router.post("/thesis/:id/summary", async (req, res, next) => {
     try {
       const thesis = await getThesisById(req.params.id);
 
@@ -147,6 +148,10 @@ export function createYoktezApp() {
       next(error);
     }
   });
+
+  // Mount router under both prefixes to prevent 404s on Vercel
+  app.use("/api", router);
+  app.use("/", router);
 
   app.use((error, _req, res, _next) => {
     console.error(error);
