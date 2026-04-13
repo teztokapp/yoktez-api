@@ -1,8 +1,17 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
   "functions": {
-    "api/[...route].js": {
+    "api/index.js": {
       "includeFiles": "abdDisciplines.json"
     }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.js"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
   }
 }

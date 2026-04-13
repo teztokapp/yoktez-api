@@ -1,44 +1,36 @@
 # YOKTez API
 
-Standalone Express API for TezTok's YOK Tez integration.
+Standalone API server for fetching and searching academic theses from the YOK Tez Merkezi.
 
-## What it does
+## Features
 
-- Serves thesis feed, search, discipline, and thesis detail endpoints
-- Wraps the YOK Tez scraping/client logic
-- Generates AI summaries when `OPENAI_API_KEY` is available
+- **Search**: Search theses by title, author, and year.
+- **Feed**: Get the latest theses in a paginated feed.
+- **Random**: Fetch a random thesis for discovery.
+- **Summary**: Generate AI summaries for theses (OpenAI required).
+- **Categories/Disciplines**: Explore theses by topic or academic discipline.
 
-## Endpoints
+## Vercel Deployment
 
-- `GET /api/health`
-- `GET /api/random-thesis`
-- `GET /api/feed`
-- `GET /api/search`
-- `GET /api/categories`
-- `GET /api/disciplines`
-- `GET /api/category-feed`
-- `GET /api/discipline-feed`
-- `GET /api/thesis/:id`
-- `POST /api/thesis/:id/summary`
+This project is ready to be deployed on Vercel as a Serverless Function.
 
-## Environment
+1. Install Vercel CLI: `npm i -g vercel`
+2. Link to your project: `vercel link`
+3. Deploy: `vercel`
 
-- `PORT` defaults to `3001`
-- `OPENAI_API_KEY` enables AI summaries
-- `SCRAPER_BASE_URL` points to an optional Playwright-backed scraper service
+The `vercel.json` is configured to route all `/api/*` requests to the Express app.
 
-## Run locally
+## Local Development
 
 ```bash
 npm install
-npm run build
 npm run dev
 ```
 
-## Deploy on Vercel
+The server will run on `http://localhost:3001`.
 
-This repo is configured as a serverless API project.
+## Environment Variables
 
-- Vercel entrypoint: `api/[...route].js`
-- Existing routes stay under `/api/...`
-- No static output directory is required
+- `PORT`: Port for the main API (default: 3001)
+- `SCRAPER_BASE_URL`: (Optional) URL of the Playwright scraper if using remote scraping.
+- `OPENAI_API_KEY`: (Optional) Required for thesis summarization.
