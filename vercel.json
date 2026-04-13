@@ -1,0 +1,14 @@
+{
+  "functions": {
+    "api/[...route].js": {
+      "runtime": "nodejs22.x",
+      "includeFiles": "abdDisciplines.json"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    }
+  ]
+}

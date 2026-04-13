@@ -34,3 +34,11 @@ npm install
 npm run build
 npm run dev
 ```
+
+## Deploy on Vercel
+
+This repo is configured as a serverless API project.
+
+- Vercel entrypoint: `api/[...route].js`
+- Existing routes stay under `/api/...`
+- No static output directory is required
