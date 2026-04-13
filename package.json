@@ -5,6 +5,7 @@
   "type": "module",
   "main": "yoktezServer.js",
   "scripts": {
+    "build": "node ./scripts/build.mjs",
     "start": "node yoktezServer.js",
     "dev": "node --watch yoktezServer.js"
   },

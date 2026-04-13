@@ -31,5 +31,6 @@ Standalone Express API for TezTok's YOK Tez integration.
 
 ```bash
 npm install
+npm run build
 npm run dev
 ```
