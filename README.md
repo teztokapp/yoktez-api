@@ -1,4 +1,4 @@
-# YOKTez API
+# YÖK Tez Merkezi API
 
 Standalone API server for fetching and searching academic theses from the YOK Tez Merkezi.
 
@@ -9,6 +9,30 @@ Standalone API server for fetching and searching academic theses from the YOK Te
 - **Random**: Fetch a random thesis for discovery.
 - **Summary**: Generate AI summaries for theses (OpenAI required).
 - **Categories/Disciplines**: Explore theses by topic or academic discipline.
+
+## API Endpoints
+
+All endpoints are available under the `/api` prefix (e.g., `http://localhost:3001/api/feed`).
+
+### Core Endpoints
+
+| Method | Path | Description | Query Parameters |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/health` | Check service health and cache status. | - |
+| `GET` | `/feed` | Get a paginated feed of the latest theses. | `cursor` (number), `limit` (max 10), `year` |
+| `GET` | `/search` | Search theses with specific criteria. | `q`, `title`, `author`, `year`, `source`, `limit` |
+| `GET` | `/random-thesis` | Fetch a random thesis for discovery. | `seed` (number) |
+| `GET` | `/thesis/:id` | Get full details for a specific thesis by ID. | - |
+| `POST` | `/thesis/:id/summary` | Generate an AI summary for the thesis. | - |
+
+### Discovery Endpoints
+
+| Method | Path | Description | Query Parameters |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/categories` | List all available academic categories. | - |
+| `GET` | `/disciplines` | List all available academic disciplines. | - |
+| `GET` | `/category-feed` | Get a feed filtered by category name. | `category` (string), `year` |
+| `GET` | `/discipline-feed` | Get a feed filtered by discipline name. | `discipline` (string), `year` |
 
 ## Vercel Deployment
 
